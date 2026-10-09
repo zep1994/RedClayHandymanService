@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const source = await readFile(new URL('../functions/api/contact.js', import.meta.url), 'utf8');
+const { onRequestPost } = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+const data = { name: 'Test Visitor', email: 'visitor@example.com', phone: '5551234567', location: 'Test City 12345', service: 'Home maintenance', message: 'Please discuss weekly care.', website: '' };
+const env = { RESEND_API_KEY: 'test', CONTACT_FROM_EMAIL: 'hello@example.com', CONTACT_TO_EMAIL: 'team@example.com' };
+const request = (body, origin = 'https://example.com') => new Request('https://example.com/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: JSON.stringify(body) });
+assert.equal((await onRequestPost({ request: request(data), env: {} })).status, 503);
+assert.equal((await onRequestPost({ request: request({ ...data, email: 'invalid' }), env })).status, 400);
+assert.equal((await onRequestPost({ request: request(data, 'https://another.com'), env })).status, 403);
+assert.equal((await onRequestPost({ request: request({ ...data, website: 'spam' }), env })).status, 200);
+const originalFetch = globalThis.fetch;
+let sent;
+globalThis.fetch = async (url, options) => { sent = JSON.parse(options.body); return new Response('{}', { status: 200 }); };
+assert.equal((await onRequestPost({ request: request(data), env })).status, 200);
+assert.equal(sent.reply_to, data.email);
+assert.deepEqual(sent.to, [env.CONTACT_TO_EMAIL]);
+assert.ok(sent.text.includes(data.message));
+globalThis.fetch = async () => new Response('{}', { status: 500 });
+assert.equal((await onRequestPost({ request: request(data), env })).status, 502);
+globalThis.fetch = originalFetch;
+const html = await readFile(new URL('../out/index.html', import.meta.url), 'utf8');
+for (const section of ['home', 'services', 'about', 'projects', 'process', 'contact']) assert.ok(html.includes(`id="${section}"`), `Missing ${section}`);
+assert.ok(html.includes('/privacy/'));
+console.log('Passed: form delivery, missing configuration, invalid input, origin check, honeypot, provider failure, and exported navigation targets.');
+

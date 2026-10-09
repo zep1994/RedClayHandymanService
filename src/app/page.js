@@ -1,69 +1,41 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+"use client";
+import { useState } from "react";
+const PHONE = "+12025550148";
+const photos = {
+ hero:"https://images.unsplash.com/photo-1505798577917-a65157d3320a?auto=format&fit=crop&w=1800&q=85",
+ room:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
+ kitchen:"https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=1000&q=85",
+ bath:"https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1000&q=85",
+};
+const services = [
+ ["repairs","General home repairs","The little fixes that make a big difference.","Doors & hardware • Drywall patching • Trim repairs"],
+ ["paint","Painting & drywall","A clean finish. A fresh perspective.","Wall touch-ups • Interior painting • Surface preparation"],
+ ["wood","Carpentry & installations","Details that make your home work better.","Shelving • Baseboards • Interior trim • Cabinet hardware"],
+ ["mount","Assembly & mounting","Less instruction-reading. More enjoying.","Furniture assembly • TV mounting • Curtain rods • Mirrors"],
+ ["seal","Home maintenance","Stay ahead of the everyday wear and tear.","Caulking • Weatherstripping • Door adjustments • Punch lists"],
+ ["list","Move-in & rental refresh","Get your space ready for its next chapter.","Repair lists • Cosmetic updates • Fixture & hardware refreshes"],
+];
+const projects = [{title:"A kitchen, refreshed",type:"Carpentry",image:photos.kitchen,text:"Cabinet details & finishing touches",service:services[2][1]}, {title:"The finishing touches",type:"Painting",image:photos.room,text:"Paint, trim & a room that feels complete",service:services[1][1]}, {title:"Small details. Big difference.",type:"Maintenance",image:photos.bath,text:"Sealing, hardware & bathroom refreshes",service:services[4][1]}];
+function Icon({type="repairs"}) { const paths={repairs:"m14 6 4-4 4 4-4 4-4-4ZM3 21l11-11m-8 6 3 3",paint:"M4 3h13v6H4zM17 6h4v7h-9v8h-3v-9",wood:"m3 19 16-16 3 3L6 22zM8 14l3 3m1-7 3 3m1-7 3 3",mount:"M3 4h18v12H3zM8 21h8m-4-5v5",seal:"m4 20 5-13h6l5 13H4ZM9 7V3h6v4m-9 8h12",list:"M6 4h14v18H4V4h2m2-2h8v4H8zM8 11h8m-8 5h8",phone:"M6 3h4l1 5-3 2c1 3 3 5 6 6l2-3 5 1v4c0 3-4 4-8 2C6 17 2 9 3 5l3-2Z"};return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[type]||paths.repairs}/></svg>;}
+function Arrow(){return <span aria-hidden="true">↗</span>;}
+function Logo(){return <span className="logo"><span className="logo-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="m5 19 15-13 15 13M10 16v18h20V16M17 34V23h6v11" stroke="currentColor" strokeWidth="3"/><path d="m13 8 5 5" stroke="currentColor" strokeWidth="3"/></svg></span><span>RED CLAY<small>HOME SERVICES</small></span></span>;}
+export default function Home(){
+ const [menu,setMenu]=useState(false),[filter,setFilter]=useState("All projects"),[service,setService]=useState(""),[step,setStep]=useState(1),[receipt,setReceipt]=useState(null);
+ function choose(value){setService(value);setReceipt(null);setStep(1);setMenu(false);}
+ function submit(event){event.preventDefault();const data=Object.fromEntries(new FormData(event.currentTarget));setReceipt({name:data.name,service:data.service,date:data.date,reference:`RC-DEMO-${Date.now().toString().slice(-6)}`});}
+ return <>
+ <div className="topbar"><span>Small fixes. Big peace of mind.</span><span>HOME REPAIRS, HANDLED WITH CARE.</span></div>
+ <header><a href="#home" aria-label="Red Clay Home Services home"><Logo/></a><nav className={menu?"open":""} aria-label="Main navigation">{[["Services","services"],["Why Red Clay","about"],["Our work","projects"],["How it works","process"]].map(([label,id])=><a key={id} href={`#${id}`} onClick={()=>setMenu(false)}>{label}</a>)}<a className="button small" href="#contact" onClick={()=>setMenu(false)}>Get a free estimate <Arrow/></a></nav><button className="menu-toggle" aria-label="Toggle navigation" aria-expanded={menu} onClick={()=>setMenu(!menu)}>{menu?"Close ✕":"Menu ☰"}</button></header>
+ <main id="home"><section className="hero"><div className="hero-copy"><p className="eyebrow"><span/> YOUR HOME. IN GOOD HANDS.</p><h1>Let’s get your<br/>to-do list<br/><em>taken care of.</em></h1><p>From the small repairs you keep putting off to the upgrades you’ve been dreaming about. We help make home feel like home again.</p><div className="hero-actions"><a className="button" href="#contact">Get a free estimate <Arrow/></a><a href="#services" className="secondary">Explore our services <span>↓</span></a></div><div className="hero-promises"><span>✓ Clear scope & pricing</span><span>✓ Care for your home</span><span>✓ No-pressure estimates</span></div></div><div className="hero-photo"><img src={photos.hero} alt="Hand tools neatly arranged on a workbench" fetchPriority="high"/><div className="photo-caption"><span className="caption-icon"><Icon/></span><div>Good work starts with<br/><strong>the little details.</strong></div><span className="caption-star">✳</span></div><span className="image-label">BUILT ON CARE. FINISHED WITH PRIDE.</span></div></section>
+ <div className="trust-strip"><span>REPAIR. REFRESH. RELAX.</span><span>One project or a whole punch list</span><i>✳</i><span>Practical solutions for everyday homes</span><i>✳</i><span>A thoughtful finish, every time</span></div>
+ <section id="services" className="section services"><div className="section-heading"><div><p className="eyebrow">WHAT CAN WE TAKE OFF YOUR LIST?</p><h2>Big on the details.<br/>Ready for the <em>little things.</em></h2></div><p>A sticking door. An unfinished room. That shelf still in its box. Find the right help for the jobs around your home.</p></div><div className="service-grid">{services.map(([icon,title,text,items],i)=><a className="service-card" href="#contact" key={title} onClick={()=>choose(title)}><div className="service-top"><Icon type={icon}/><span>0{i+1}</span></div><h3>{title}</h3><p>{text}</p><small>{items}</small><div className="service-link">Let’s fix it <Arrow/></div></a>)}</div><div className="service-bottom"><p>Don’t see your project? We’re happy to talk it through.</p><a className="text-link" href="#contact" onClick={()=>choose("Something else / not sure")}>Tell us what you need <Arrow/></a></div></section>
+ <section id="about" className="section about"><div className="about-image"><img src={photos.room} alt="Bright, thoughtfully finished living space" loading="lazy"/><div className="about-badge">A little care.<br/><strong>A better home.</strong></div></div><div className="about-copy"><p className="eyebrow">THE RED CLAY APPROACH</p><h2>It’s your home.<br/>We treat it <em>that way.</em></h2><p>Good home service starts with listening. We take time to understand what needs fixing, talk through the options, and agree on the work before getting started.</p><div className="principles">{[["01","Straightforward from the start","A clear scope and estimate before you commit."],["02","Respect for your space","Thoughtful preparation and a tidy finish."],["03","The right solution","Practical recommendations for your home and your budget."]].map(([n,title,text])=><div key={n}><span>{n}</span><div><h3>{title}</h3><p>{text}</p></div></div>)}</div><a className="text-link" href="#contact">Let’s talk about your home <Arrow/></a></div></section>
+ <section id="projects" className="section projects"><div className="section-heading"><div><p className="eyebrow">THE POSSIBILITIES AT HOME</p><h2>Small improvements.<br/><em>A whole new feeling.</em></h2></div><a className="text-link" href="#contact">Start your own project <Arrow/></a></div><div className="filters" role="group" aria-label="Filter project inspiration">{["All projects","Carpentry","Painting","Maintenance"].map(value=><button key={value} onClick={()=>setFilter(value)} aria-pressed={filter===value} className={filter===value?"active":""}>{value}</button>)}</div><div className="project-grid">{projects.filter(item=>filter==="All projects"||item.type===filter).map(item=><a key={item.title} href="#contact" className="project" onClick={()=>choose(item.service)}><div className="project-image"><img src={item.image} alt={item.text} loading="lazy"/><span>{item.type}</span></div><h3>{item.title}<Arrow/></h3><p>{item.text}</p></a>)}</div><p className="gallery-note">Project inspiration shown with stock photography. Actual Red Clay project photos can be added here.</p></section>
+ <section className="punch-banner"><div><p className="eyebrow">THAT LIST ISN’T GOING TO FIX ITSELF.</p><h2>One visit.<br/><em>A shorter to-do list.</em></h2></div><div><p>Got a handful of small jobs? Send us your punch list and we’ll help you put together a practical plan.</p><a className="button" href="#contact" onClick={()=>choose("Home maintenance")}>Let’s tackle your list <Arrow/></a></div><span className="banner-decoration" aria-hidden="true">✳</span></section>
+ <section id="process" className="section process"><div className="section-heading"><div><p className="eyebrow">LESS HASSLE. MORE HOME.</p><h2>Getting it done<br/>starts <em>right here.</em></h2></div><p>No complicated booking. No guessing what happens next. Just a clear path from your first idea to the finished job.</p></div><div className="process-grid">{[["01","Tell us what’s on your list","Share your project, your location, and the timing you have in mind."],["02","Get a plan & an estimate","We’ll review the details and discuss the scope, pricing, and availability."],["03","Leave the tools to us","Once you approve the estimate and schedule, we’ll get the work underway."]].map(([n,title,text])=><article key={n}><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+ <section className="section faq" id="faq"><div><p className="eyebrow">GOOD QUESTIONS. STRAIGHT ANSWERS.</p><h2>A few things<br/>you might <em>be wondering.</em></h2></div><div className="questions">{[["Can I book several small repairs together?","Absolutely. Add your entire punch list to the request. We’ll discuss what can be grouped into a visit and provide an estimate for the agreed work."],["How much will my project cost?","Pricing depends on the work, materials, and time involved. Share the details so we can discuss a clear estimate before you commit."],["Is my requested date a confirmed appointment?","No. Your preferred date helps us plan, but appointments are confirmed only after we discuss the project, approve the scope, and agree on availability."],["Do you handle electrical, plumbing, or structural work?","Tell us what you need. Work requiring specialized licensing, permits, or structural expertise should be handled by the appropriate qualified professional. We’ll discuss whether your project fits our services."],["Do you serve my area?","Include your city and ZIP code in your request so service availability can be confirmed."],["What should I do before a visit?","Clear access to the work area and mention any relevant property rules or material preferences when your appointment is arranged."]].map(([q,a])=><details key={q}><summary>{q}<span>+</span></summary><p>{a}</p></details>)}</div></section>
+ <section id="contact" className="section contact"><div className="contact-copy"><p className="eyebrow">LET’S CHECK SOMETHING OFF YOUR LIST.</p><h2>A better home<br/>starts with<br/><em>a hello.</em></h2><p>Tell us about the repairs or improvements you have in mind. Start with a few details, and we’ll take it from there.</p><a className="contact-phone" href={`tel:${PHONE}`}><Icon type="phone"/><span>Prefer to talk?<strong>(202) 555-0148</strong></span><Arrow/></a><small>Demo phone number · No live business line</small><div className="contact-detail"><span>✳</span><p>Clear expectations.<br/>Thoughtful work. A home that feels better.</p></div><p className="demo-note">This is a demonstration website. Booking requests are simulated and no email is sent. Please use sample information.</p></div>
+ <div className="booking-panel">{receipt?<div className="booking-success" role="status"><span className="success-mark">✓</span><p className="eyebrow">DEMO REQUEST COMPLETE</p><h3>Thanks, {receipt.name.split(" ")[0]}.</h3><p>Your sample request for <strong>{receipt.service}</strong> is complete.</p>{receipt.date&&<p>Preferred date: {receipt.date}</p>}<code>{receipt.reference}</code><p className="demo-note">No email was sent and no appointment was booked. In a live deployment, the team would follow up to confirm your project and availability.</p><button className="button" onClick={()=>{setReceipt(null);setStep(1);setService("");}}>Submit another request <Arrow/></button></div>:<form onSubmit={submit}><div className="form-heading"><h3>Request your free estimate</h3><span>{step} / 2</span></div><p>Tell us a little about the job. We’ll handle the next steps.</p><div className="step-indicators"><span className={step===1?"active":"done"}>01 Your project</span><span className={step===2?"active":""}>02 Your details</span></div><fieldset hidden={step!==1}><legend className="sr-only">Your project</legend><label>What can we help with?<select name="service" value={service} onChange={e=>setService(e.target.value)} required><option value="">Choose a service</option>{[...services.map(item=>item[1]),"Something else / not sure"].map(value=><option key={value}>{value}</option>)}</select></label><label>City & ZIP code<input name="location" placeholder="Example: Sample City, 12345" required maxLength={150}/></label><div className="form-grid"><label>Preferred date <span>(optional)</span><input type="date" name="date" min={new Date().toLocaleDateString("en-CA")}/></label><label>Project size<select name="size"><option>A small repair</option><option>A few jobs / punch list</option><option>A room refresh</option><option>Not sure yet</option></select></label></div><label>Tell us about your project<textarea name="message" placeholder="What needs fixing? Include any helpful details…" rows={4} required maxLength={5000}/></label><button className="button" type="button" onClick={e=>{const fields=e.currentTarget.form.querySelectorAll('fieldset:first-of-type input, fieldset:first-of-type select, fieldset:first-of-type textarea');for(const field of fields){if(!field.reportValidity())return;}setStep(2);}}>Continue to your details <Arrow/></button></fieldset><fieldset hidden={step!==2}><legend className="sr-only">Your contact details</legend><label>Full name<input name="name" placeholder="Sample name" autoComplete="name" required maxLength={100}/></label><label>Email address<input name="email" type="email" placeholder="you@example.com" autoComplete="email" required maxLength={200}/></label><label>Phone number<input name="phone" type="tel" placeholder="(202) 555-0123" autoComplete="tel" required maxLength={40}/></label><label className="consent"><input type="checkbox" name="consent" required/>I understand this is a demo request and does not book an appointment or send an email.</label><div className="booking-actions"><button className="back-button" type="button" onClick={()=>setStep(1)}>← Back</button><button className="button" type="submit">Submit demo request <Arrow/></button></div></fieldset><p className="form-footnote">No payment required. Preferred dates are subject to confirmation.</p></form>}</div></section>
+ </main><footer><div className="footer-main"><a href="#home"><Logo/></a><p>Good work.<br/><em>Right at home.</em></p><div><span>EXPLORE</span><a href="#services">Our services</a><a href="#projects">Project inspiration</a><a href="#process">How it works</a></div><div><span>LET’S CONNECT</span><a href="#contact">Request an estimate</a><a href={`tel:${PHONE}`}>(202) 555-0148</a><small>Fictional demonstration number</small></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Red Clay Home Services · Demo website</span><a href="/privacy/">Privacy policy</a><a href="#home">Back to top ↑</a></div></footer><div className="mobile-bar"><a href={`tel:${PHONE}`}><Icon type="phone"/> Call demo number</a><a href="#contact">Get an estimate <Arrow/></a></div>
+ </>;
 }

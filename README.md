@@ -1,37 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Red Clay Home Services
 
-## Getting Started
+A responsive handyman website with services, project inspiration filters, FAQs, a two-step estimate flow, and mobile click-to-call.
 
-First, run the development server:
+## Demo behavior
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The owner requested fictional contact details. The phone number `(202) 555-0148` is a reserved fictional number. Clicking it opens the device dialer; there is no live business line.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Booking is explicitly a demo: required fields are validated, and submission displays a sample confirmation/reference. No email is sent, no appointment is booked, and form data remains only in page memory. It clears when the page reloads. Use sample details.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Gallery images are labeled stock inspiration from Unsplash. There are no fabricated reviews, customer projects, license claims, or business statistics.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+Run `npm install`, then `npm run dev`. Run `npm run build` to export the site to `out`.
 
-To learn more about Next.js, take a look at the following resources:
+## Cloudflare Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a **Pages** project connected to your GitHub repository. Use these settings:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Production branch: `main`
+- Framework preset: `None`
+- Build command: `npm run build`
+- Build output directory: `out`
+- Root directory: blank
+- Environment variable: `NODE_VERSION=22`
 
-## Deploy on Vercel
+`out` is a directory, not a deploy command. If the dashboard asks for a deploy command, you are in the Workers setup; return and choose Pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Keep the root `functions` directory in your repository for future live email delivery. Deploy through Git or `npx wrangler pages deploy out --project-name YOUR_PROJECT_NAME` from the root to include Pages Functions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# RedClayHandymanService
+## Moving to a real business
+
+Replace the phone in `src/app/page.js`, supply a real service area, add authentic project photos, and update the privacy policy. No real credentials are required for the current demo.
+
+A reusable email endpoint is supplied at `functions/api/contact.js`. To enable real delivery, configure `RESEND_API_KEY` (secret), `CONTACT_FROM_EMAIL` (sender on a verified Resend domain), and `CONTACT_TO_EMAIL` (recipient) in Cloudflare Pages, then redeploy. The current form intentionally does not call that endpoint. Replace its simulated submit handler with a POST to `/api/contact` when ready to accept real requests, and show success only after a successful response. Optional date and project-size fields are supported by the endpoint.
+
+Run `node scripts/verify-contact.mjs` after building for endpoint and export checks.
